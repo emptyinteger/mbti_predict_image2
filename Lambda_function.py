@@ -24,13 +24,13 @@ num_epochs = 3
 log_interval = 1600    # metrics 생성 시점
 
 BUCKET_NAME = 'mbti-predict-s3'  
-OBJECT_NAME = ['mbti_model_koe.pt','config.json','special_tokens_map.json','tf_model.h5','tokenizer_config.json','vocab.txt']
+OBJECT_NAME = ['mbti_model_koe.pt']
 PATH_NAME = '/tmp/' 
-PATH_t_NAME = '/torch/' 
+#PATH_t_NAME = '/torch/' 
 
 s3 = boto3.client('s3')
 for obj in OBJECT_NAME:
-    s3.download_file(BUCKET_NAME, PATH_t_NAME+obj, PATH_NAME+obj)
+    s3.download_file(BUCKET_NAME, obj, PATH_NAME+obj)
 
 device = torch.device('cpu')
 
