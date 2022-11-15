@@ -35,7 +35,7 @@ for obj in OBJECT_NAME:
 device = torch.device('cpu')
 
 model_name = 'monologg/koelectra-small-v3-discriminator'
-tokenizer = AutoTokenizer.from_pretrained('/tmp', local_files_only=True, cache_dir='/tmp')
+tokenizer = AutoTokenizer.from_pretrained(model_name)
 model = AutoModelForSequenceClassification.from_pretrained('/tmp/pytorch.pt', num_labels=16)
 model.to(device)
 
