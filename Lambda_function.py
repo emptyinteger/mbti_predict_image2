@@ -161,19 +161,17 @@ def api_predict(sentence):
     for i in range(0,16):
         preds[i] = round((normpdf(pred[i],-3,1)/sumno)*100)
    
-    maxIndex = preds.index(max(preds))
+    maxIndex = str(preds.index(max(preds)))
     
     
 
     
     for key, value in cat_dict.items():
-        appendInt = int(np.round(chung[0,int(key)]*100))
-        intChung.append(appendInt)
-        result_dict.update({value:appendInt})
+        result_dict.update({value:preds[int(key)]})
     
     x = np.arange(16)
     predi = cat_dict[preds]
-    result_dict.update({'mbti':predi})
+    result_dict.update({'mbti':cat_dict[maxIndex]})
 
     return result_dict     
 
