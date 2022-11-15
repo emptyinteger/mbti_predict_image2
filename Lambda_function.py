@@ -72,21 +72,16 @@ training_args = TrainingArguments(
     evaluation_strategy="steps",
     eval_steps=log_interval,
 
-    # https://discuss.huggingface.co/t/save-only-best-model-in-trainer/8442/8
     save_total_limit=2,
     save_strategy='no',
     load_best_model_at_end=False,
 
-    # 성능 그래프 시각화 유틸리티 (사용안함)
-    # report_to="wandb",
-    # run_name="transformer-kcelectra_1"
 )
 #정확도 측정을 위한 함수 정의
 def compute_metrics(pred):
     labels = pred.label_ids
     preds = pred.predictions.argmax(-1)
-    # average: 'micro', 'macro', 'weighted' or 'samples' 
-    # 참고 https://aimb.tistory.com/152
+
     precision, recall, f1, _ = precision_recall_fscore_support(labels, preds, average='weighted')
     acc = accuracy_score(labels, preds)
     return {
@@ -103,9 +98,6 @@ trainer = Trainer(
 )
 
 model.eval()
-
-
-
 
 def mean_answer_label(*preds):
   preds_sum = np.zeros(preds[0].shape[0])
@@ -163,26 +155,17 @@ def api_predict(sentence):
    
     maxIndex = str(preds.index(max(preds)))
     
-    
-
-    
     for key, value in cat_dict.items():
         result_dict.update({value:preds[int(key)]})
     
-    x = np.arange(16)
-    predi = cat_dict[preds]
     result_dict.update({'mbti':cat_dict[maxIndex]})
 
     return result_dict     
 
 
-
-
-
 def handler(event, context):
   text = str(event.get('text'))
   result = api_predict(text)
-  
     
   return {
     "statusCode": 200,
