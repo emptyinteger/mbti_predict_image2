@@ -46,13 +46,6 @@ s3transfer==0.6.0
 simplejson==3.2.0
 six==1.16.0
 sklearn==0.0.post1
-tensorboard==2.10.1
-tensorboard-data-server==0.6.1
-tensorboard-plugin-wit==1.8.1
-tensorflow-cpu==2.10.0
-tensorflow-addons==0.18.0
-tensorflow-estimator==2.10.0
-tensorflow-io-gcs-filesystem==0.27.0
 termcolor==2.0.1
 tokenizers==0.13.1
 tqdm==4.64.1
