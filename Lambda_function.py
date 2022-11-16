@@ -59,14 +59,14 @@ class ReviewDataset(Dataset):
 from sklearn.metrics import precision_recall_fscore_support, accuracy_score
 
 training_args = TrainingArguments(
-    output_dir='./tmp/electra',
+    output_dir='/tmp/electra',
     overwrite_output_dir='True',
 
     num_train_epochs=num_epochs,
     per_device_train_batch_size=batch_size,
     per_device_eval_batch_size=batch_size,
  
-    logging_dir='./tmp/logs',
+    logging_dir='/tmp/logs',
     logging_steps=log_interval,
     evaluation_strategy="steps",
     eval_steps=log_interval,
