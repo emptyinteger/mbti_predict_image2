@@ -34,8 +34,8 @@ for obj in OBJECT_NAME:
 device = torch.device('cpu')
 
 model_name = 'monologg/koelectra-small-v3-discriminator'
-tokenizer = AutoTokenizer.from_pretrained(model_name, cache_dir="tmp/")
-model = AutoModelForSequenceClassification.from_pretrained(model_name, num_labels=16, cache_dir="tmp/")
+tokenizer = AutoTokenizer.from_pretrained(model_name, cache_dir="/tmp/")
+model = AutoModelForSequenceClassification.from_pretrained(model_name, num_labels=16, cache_dir="/tmp/")
 model.to(device)
 
 model.load_state_dict(torch.load("/tmp/mbti_model_koe.pt",  map_location=device))
