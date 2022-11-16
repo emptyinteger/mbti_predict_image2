@@ -8,3 +8,7 @@ tokenizers==0.13.1
 transformers==4.23.1
 --find-links https://download.pytorch.org/whl/torch_stable.html
 torch==1.13.0+cpu
+scikit-learn==1.0.2
+joblib==1.2.0
+scipy==1.7.3
+threadpoolctl==3.1.0
