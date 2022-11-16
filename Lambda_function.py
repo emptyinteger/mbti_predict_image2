@@ -3,14 +3,12 @@
 
 import json
 import torch
-from transformers import AutoModelForQuestionAnswering, AutoTokenizer, AutoConfig
-from transformers import AutoTokenizer, AutoModelForSequenceClassification, TrainingArguments, Trainer
+from transformers import AutoTokenizer, AutoModelForSequenceClassification, TrainingArguments, Trainer, AutoTokenizer
 import numpy as np
 import pandas as pd
 import json
 import numpy as np
 import pandas as pd
-from tqdm import tqdm
 import os
 import re
 import io
@@ -100,15 +98,7 @@ trainer = Trainer(
 
 model.eval()
 
-def mean_answer_label(*preds):
-  preds_sum = np.zeros(preds[0].shape[0])
-  for pred in preds:
-    preds_sum += np.argmax(pred, axis=-1)
-  return np.round(preds_sum/len(preds), 0).astype(int)
-
-
 def api_predict(sentence):
-    
     cat_dict = {'0':'enfj','1':'enfp','2':'entj','3':'entp','4':'esfj','5':'esfp','6':'estj','7':'estp',
              '8':'infj','9':'infp','10':'intj','11':'intp','12':'isfj','13':'isfp','14':'istj','15':'istp'}
     result_dict = {}
@@ -139,30 +129,18 @@ def api_predict(sentence):
         for j in range(0,16):
             pred[j] += predictions[0][i][j]/8
     
-    import math
-    def normpdf(x, mean, sd):
-        var = float(sd)**2
-        denom = (2*math.pi*var)**.5
-        num = math.exp(-(float(x)-float(mean))**2/(2*var))
-        return num/denom
-    
-    sumno = 0
-    for i in pred:
-        sumno += normpdf(i,-3,1)
-    sumno
-    preds = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-    for i in range(0,16):
-        preds[i] = round((normpdf(pred[i],-3,1)/sumno)*100)
-   
-    maxIndex = str(preds.index(max(preds)))
-    
+    maxIndex = str(pred.index(max(pred)))
+
+    def softmax(x):
+        return np.exp(x) / np.sum(np.exp(x))
+
+    result = softmax(pred)*100
+
     for key, value in cat_dict.items():
-        result_dict.update({value:preds[int(key)]})
-    
+        result_dict.update({value:round(result[int(key)])})
     result_dict.update({'mbti':cat_dict[maxIndex]})
 
-    return result_dict     
-
+    return result_dict      
 
 def handler(event, context):
   text = str(event.get('text'))
