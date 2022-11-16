@@ -25,7 +25,7 @@ log_interval = 1600    # metrics 생성 시점
 BUCKET_NAME = 'mbti-predict-s3'  
 OBJECT_NAME = ['mbti_model_koe.pt','config.json','pytorch_model.bin','tokenizer_config.json','vocab.txt']
 PATH_NAME = '/tmp/' 
-PATH_t_NAME = '/torch/' 
+PATH_t_NAME = 'torch/' 
 
 s3 = boto3.client('s3')
 for obj in OBJECT_NAME:
