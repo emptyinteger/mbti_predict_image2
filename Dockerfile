@@ -8,13 +8,13 @@ RUN /var/lang/bin/python3.8 -m pip install --upgrade pip
 RUN yum install git -y
 
 # git clone
-RUN git clone https://github.com/emptyinteger/mbti_prediction_image2.git 
+RUN git clone https://github.com/emptyinteger/mbti_predict_image2.git 
 
 # install packages
-RUN pip install -r mbti_prediction_image2/requirements.txt
+RUN pip install -r mbti_predict_image2/requirements.txt
 
 # git repository 의 Lambda_function.py 를 Container 내부의 /var/task/ 로 이동
-RUN cp mbti_prediction_image2/Lambda_function.py /var/task/
+RUN cp mbti_predict_image2/Lambda_function.py /var/task/
 
 # Lambda_function.handler 실행
 CMD ["Lambda_function.handler"]
