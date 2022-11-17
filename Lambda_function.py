@@ -18,7 +18,7 @@ import boto3
 #tokenizer = AutoTokenizer.from_pretrained(model_name)
 
 max_len = 128          
-batch_size = 8
+batch_size = 1
 num_epochs = 3
 log_interval = 1600    # metrics 생성 시점
 
@@ -110,8 +110,9 @@ def api_predict(sentence):
     sentence = re.sub("\\n+", " ", sentence)
     sentence = re.sub("\\t+", " ", sentence)
     
-    test_df = pd.DataFrame({'id':[0,1,2,3,4,5,6,7],'data':[sentence,sentence,sentence,sentence,sentence,sentence,sentence,sentence],'label':[0,0,0,0,0,0,0,0]})
-
+    #test_df = pd.DataFrame({'id':[0,1,2,3,4,5,6,7],'data':[sentence,sentence,sentence,sentence,sentence,sentence,sentence,sentence],'label':[0,0,0,0,0,0,0,0]})
+    test_df = pd.DataFrame({'id':[0],'data':[sentence],'label':[0]})
+    
     encoded_test = tokenizer(
         test_df['data'].tolist(),
         return_tensors='pt',
@@ -128,9 +129,12 @@ def api_predict(sentence):
 
     pred = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 
-    for i in range(0,8):
+    '''for i in range(0,8):
         for j in range(0,16):
-            pred[j] += predictions[0][i][j]/8
+            pred[j] += predictions[0][i][j]/8'''
+    
+    for j in range(0,16):
+        pred[j] += predictions[0][0][j]
     
     maxIndex = str(pred.index(max(pred)))
 
