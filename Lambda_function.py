@@ -102,6 +102,8 @@ trainer = Trainer(
 model.eval()
 
 def api_predict(sentence):
+    if len(sentence) < 1:
+        return ''
     cat_dict = {'0':'enfj','1':'enfp','2':'entj','3':'entp','4':'esfj','5':'esfp','6':'estj','7':'estp',
              '8':'infj','9':'infp','10':'intj','11':'intp','12':'isfj','13':'isfp','14':'istj','15':'istp'}
     result_dict = {}
